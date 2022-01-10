@@ -39,7 +39,6 @@ const commonConfig = {
     module: {
         rules: [{
                 test: /\.vue$/,
-                include: resolvePath('../src'),
                 loader: 'vue-loader'
             }, 
             {
@@ -56,17 +55,15 @@ const commonConfig = {
                     }
                 ]
             }, {
-                test: /\.js$/,
-                include: resolvePath('../src'),
-                exclude: /(node_modules|bower_components)/,
+                test: /\.m?js$/,
+                // include: resolvePath('../src'),
+                // exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: 'babel-loader',
                     options: {
                         presets: ['@babel/preset-env']
                     }
-                }
-            }, {
-                test: /\.mjs$/i,
+                },
                 resolve: {
                     byDependency: {
                         esm: {
