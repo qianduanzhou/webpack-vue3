@@ -1,52 +1,21 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const path = require('path');
 const webpack = require('webpack');
-const { VueLoaderPlugin } = require('vue-loader');
+const { merge } = require('webpack-merge'); 
+const { commonConfig, resolvePath } = require('./webpack.config.common')
 
-function resolvePath(filePath) {
-    return path.resolve(__dirname, filePath);
-}
-
-module.exports = {
+module.exports = merge(commonConfig, {
     mode: 'development',
-    entry: resolvePath('../src/main.js'),
-    output: {
-        path: resolvePath('../dist'),
-        filename: '[contenthash].bundle.js',
-    },
+    devtool: 'eval-cheap-module-source-map',
     devServer: {
         static: {
           directory: resolvePath('../public'),
         },
-        open: true,
+        open: false,
         hot: true,
         compress: true,
         port: 9000,
     },
     module: {
-        rules: [{
-            test: /\.vue$/,
-            loader: 'vue-loader'
-        }, {
-            test: /\.s?css$/,
-            use: [{
-                loader: 'style-loader'
-            }, {
-                loader: 'css-loader'
-            }, {
-                loader: 'sass-loader'
-            }]
-        }],
+        rules: [],
     },
-    plugins: [
-        new webpack.DefinePlugin({
-            BASE_URL: '"./"'
-        }),
-        new HtmlWebpackPlugin({
-            title: 'vue3-app',
-            filename: 'index.html',
-            template: resolvePath('../public/index.html'),
-        }),
-        new VueLoaderPlugin(),
-    ],
-};
+    plugins: [],
+});

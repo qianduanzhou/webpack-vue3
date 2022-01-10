@@ -1,14 +1,28 @@
 <template>
-    
+  <img src="./assets/logo.png" alt="">
+  <el-row class="mb-4">
+    <el-button>Default</el-button>
+    <el-button type="primary">Primary</el-button>
+    <el-button type="success">Success</el-button>
+    <el-button type="info">Info</el-button>
+    <el-button type="warning">Warning</el-button>
+    <el-button type="danger">Danger</el-button>
+    <el-button>中文</el-button>
+  </el-row>
+  <el-select></el-select>
 </template>
 
 <script>
+import {ref} from 'vue';
 export default {
-  name: 'App'
+  name: 'App',
+  setup() {
+
+  }
 }
 </script>
 
-<style>
+<style lang="scss" scope>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
