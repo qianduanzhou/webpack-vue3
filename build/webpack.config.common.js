@@ -24,7 +24,8 @@ const commonConfig = {
     entry: resolvePath('../src/main.js'),
     output: {
         path: resolvePath('../dist'),
-        filename: '[contenthash].bundle.js',
+        filename: 'bundle/[name].[chunkhash].bundle.js',//在entry中的被引入的文件
+        chunkFilename: 'bundle/[name].[chunkhash].bundle.js',//未被列在entry中，却又需要被打包出来的文件命名配置，如异步加载
     },
     cache: {
         type: "filesystem", // 使用文件缓存
@@ -74,13 +75,21 @@ const commonConfig = {
             }, { //webpack5 新方式，取代之前的raw url file-loader 
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 include: resolvePath('../src'),
-                type: "asset/resource",
+                type: "asset",
+                parser: {
+                    dataUrlCondition: {
+                      maxSize: 4 * 1024 // 超过多少k采用生成文件（resource ）的形式，否则内联在js里（inline）
+                    }
+                },
+                generator: {
+                    filename: 'static/img/[name].[chunkhash][ext][query]'//指定目录和文件名
+                }
             },
         ],
     },
     plugins: [
         new webpack.DefinePlugin({
-            BASE_URL: '"./"'
+            BASE_URL: '"./public/"'
         }),
         new HtmlWebpackPlugin({
             title: 'vue3-app',
@@ -89,7 +98,7 @@ const commonConfig = {
         }),
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            filename: "[name].css",
+            filename: "static/css/[name].[contenthash].css",
         }), //抽离css，为每个包含 CSS 的 JS 文件创建一个 CSS 文件
         AutoImport({
             resolvers: [ElementPlusResolver()],

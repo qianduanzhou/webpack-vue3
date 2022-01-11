@@ -1,5 +1,6 @@
 <template>
-  <img src="./assets/logo.png" alt="">
+  <img src="./assets/img/logo.png" alt="">
+  <img src="./assets/img/offline.png" alt="">
   <el-row class="mb-4">
     <el-button>Default</el-button>
     <el-button type="primary">Primary</el-button>
@@ -9,15 +10,19 @@
     <el-button type="danger">Danger</el-button>
     <el-button>中文</el-button>
   </el-row>
-  <el-select></el-select>
+  <Test></Test>
 </template>
 
 <script>
 import {ref} from 'vue';
+import Test from '@/component/test'
 export default {
   name: 'App',
   setup() {
 
+  },
+  components: {
+    Test
   }
 }
 </script>

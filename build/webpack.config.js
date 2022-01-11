@@ -26,6 +26,7 @@ let config = merge(commonConfig, {
         rules: [],
     },
     optimization: {
+        minimize: true,
         minimizer: [
             new TerserPlugin({//js压缩
                 parallel: 4,//多线程
@@ -65,6 +66,7 @@ let config = merge(commonConfig, {
                 // name: 'vendors', 一定不要定义固定的name
                 priority: 10, // 优先级
                 enforce: true,
+                filename: 'bundle/verdors/[name].[chunkhash].bundle.js',
               },
             },
         },
@@ -75,7 +77,7 @@ let config = merge(commonConfig, {
         new CopyWebpackPlugin({
             patterns: [{
                 from: resolvePath('../public/favicon.ico'),
-                to: resolvePath('../dist/favicon.ico'),
+                to: resolvePath('../dist/public/favicon.ico'),
             }]
         }),
         new PurgeCSSPlugin({//未引入的css不打包
