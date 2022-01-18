@@ -24,8 +24,8 @@ const commonConfig = {
     entry: resolvePath('../src/main.js'),
     output: {
         path: resolvePath('../dist'),
-        filename: 'bundle/[name].[chunkhash].bundle.js',//在entry中的被引入的文件
-        chunkFilename: 'bundle/[name].[chunkhash].bundle.js',//未被列在entry中，却又需要被打包出来的文件命名配置，如异步加载
+        filename: 'bundle/[name].[chunkhash].bundle.js', //在entry中的被引入的文件
+        chunkFilename: 'bundle/[name].[chunkhash].bundle.js', //未被列在entry中，却又需要被打包出来的文件命名配置，如异步加载
     },
     cache: {
         type: "filesystem", // 使用文件缓存
@@ -41,7 +41,7 @@ const commonConfig = {
         rules: [{
                 test: /\.vue$/,
                 loader: 'vue-loader'
-            }, 
+            },
             {
                 test: /\.s?css$/,
                 use: [
@@ -49,7 +49,7 @@ const commonConfig = {
                     'css-loader',
                     'sass-loader',
                     {
-                        loader: "thread-loader",
+                        loader: "thread-loader", //多进程打包，代替happywebpack
                         options: {
                             workerParallelJobs: 2,
                         },
@@ -59,12 +59,19 @@ const commonConfig = {
                 test: /\.m?js$/,
                 // include: resolvePath('../src'),
                 // exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
+                use: [{
+                        loader: 'babel-loader?cacheDirectory',
+                        options: {
+                            presets: ['@babel/preset-env']
+                        }
+                    },
+                    {
+                        loader: "thread-loader", //多进程打包，代替happywebpack
+                        options: {
+                            workerParallelJobs: 2,
+                        },
                     }
-                },
+                ],
                 resolve: {
                     byDependency: {
                         esm: {
@@ -78,11 +85,11 @@ const commonConfig = {
                 type: "asset",
                 parser: {
                     dataUrlCondition: {
-                      maxSize: 4 * 1024 // 超过多少k采用生成文件（resource ）的形式，否则内联在js里（inline）
+                        maxSize: 4 * 1024 // 超过多少k采用生成文件（resource ）的形式，否则内联在js里（inline）
                     }
                 },
                 generator: {
-                    filename: 'static/img/[name].[chunkhash][ext][query]'//指定目录和文件名
+                    filename: 'static/img/[name].[chunkhash][ext][query]' //指定目录和文件名
                 }
             },
         ],
