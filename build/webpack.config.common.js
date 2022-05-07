@@ -89,7 +89,7 @@ const commonConfig = {
                     }
                 },
                 generator: {
-                    filename: 'static/img/[name].[chunkhash][ext][query]' //指定目录和文件名
+                    filename: 'static/img/[name].[contenthash][ext][query]' //指定目录和文件名
                 }
             },
         ],
