@@ -38,7 +38,8 @@ const commonConfig = {
         symlinks: false,
     },
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.vue$/,
                 loader: 'vue-loader'
             },
@@ -55,7 +56,8 @@ const commonConfig = {
                         },
                     }
                 ]
-            }, {
+            }, 
+            {
                 test: /\.m?js$/,
                 // include: resolvePath('../src'),
                 // exclude: /(node_modules|bower_components)/,
@@ -79,7 +81,8 @@ const commonConfig = {
                         }
                     }
                 }
-            }, { //webpack5 新方式，取代之前的raw url file-loader 
+            }, 
+            { //webpack5 新方式，取代之前的raw url file-loader 
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 include: resolvePath('../src'),
                 type: "asset",
